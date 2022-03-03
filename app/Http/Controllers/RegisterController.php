@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Factura;
+use App\Models\User;
 
-class FacturaController extends Controller
+class RegisterController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class FacturaController extends Controller
      */
     public function index()
     {
-        $facturas=Factura::all();
-        return view('lista',compact('facturas'));
+        //
     }
 
     /**
@@ -25,7 +24,7 @@ class FacturaController extends Controller
      */
     public function create()
     {
-        return view('facturas.create');
+        return view('auth.register');
     }
 
     /**
@@ -36,7 +35,25 @@ class FacturaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $this->validate(request(),[
+                'nombre' => 'required|min:4',
+                'email' => 'required|email',
+                'passUno' => 'required'
+            ]);
+
+            $user = User::create([
+                'name' => $request->input('nombre'),
+                'email' => $request->input('email'),
+                'password' => $request->input('passUno'),
+            ]);
+            auth()->login($user);
+            return redirect()->route('login.create');
+        }catch(Exception $e){
+            return back()->withErrors([
+                'message' => 'Usuario o contraseña incorrecto'
+            ]);
+        }
     }
 
     /**
@@ -56,21 +73,19 @@ class FacturaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($num)
+    public function edit($id)
     {
-        $factura=Factura::find($num);
-       
-        return view('factura',['factura'=>$factura]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $num
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $num)
+    public function update(Request $request, $id)
     {
         //
     }

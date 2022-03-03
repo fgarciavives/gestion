@@ -1,10 +1,11 @@
 <link rel="stylesheet" href="{{asset('css/app.css')}}">
 @extends('layouts.app')
-@section('title','Home')
+@section('title','Crear Factura')
     
 @section('content')
-<div class="welcome">
-    <h1>Bienvenido a la aplicación de Gestión</h1>
-</div>
+
+<div class="cajonCrearFactura">
     
+</div>
+
 @endsection

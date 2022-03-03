@@ -1,0 +1,28 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color:grey;
+}
+
+.welcome {
+    text-align: center;
+    background-color:black;
+    color:white;
+    font-weight: bold;
+    margin: 5%;
+}
+
+.tablaListarFacturas {
+    margin:5%;
+    background-color:white;
+    border: 2px solid black;
+}
+
+.vsc-initialized {
+    background-color:grey;
+}
+
+.cajonCrearFactura {
+    
+}

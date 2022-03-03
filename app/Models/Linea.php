@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Linea extends Model
 {
     use HasFactory;
+    protected $primaryKey='id';
     
     public function factura(){
         return $this->belongsTo('App\Models\Factura');

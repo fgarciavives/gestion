@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Factura;
 
-class FacturaController extends Controller
+class LoginController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +13,7 @@ class FacturaController extends Controller
      */
     public function index()
     {
-        $facturas=Factura::all();
-        return view('lista',compact('facturas'));
+        //
     }
 
     /**
@@ -25,7 +23,7 @@ class FacturaController extends Controller
      */
     public function create()
     {
-        return view('facturas.create');
+        return view('auth.login');
     }
 
     /**
@@ -36,7 +34,13 @@ class FacturaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (auth()->attempt(request(['name','password']))==false){
+            return back()->withErrors([
+                'message' => 'Usuario o contraseña incorrecto'
+            ]);
+        }
+
+        return redirect()->route('home');
     }
 
     /**
@@ -56,21 +60,19 @@ class FacturaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($num)
+    public function edit($id)
     {
-        $factura=Factura::find($num);
-       
-        return view('factura',['factura'=>$factura]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $num
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $num)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -81,8 +83,9 @@ class FacturaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        auth()->logout();
+        return redirect()->route('home');
     }
 }
