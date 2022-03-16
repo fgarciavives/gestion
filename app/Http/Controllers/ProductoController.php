@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
-use Exception;
+use App\Models\Producto;
 
-class RegisterController extends Controller
+class ProductoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,8 @@ class RegisterController extends Controller
      */
     public function index()
     {
-        //
+        $productos=Producto::paginate(10);
+        return view('productos.listar',compact('productos'));
     }
 
     /**
@@ -25,7 +25,7 @@ class RegisterController extends Controller
      */
     public function create()
     {
-        return view('auth.register');
+        return view('productos.create');
     }
 
     /**
@@ -36,25 +36,12 @@ class RegisterController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $this->validate(request(),[
-                'nombre' => 'required|min:4',
-                'email' => 'required|email',
-                'passUno' => 'required'
-            ]);
+        $producto = new Producto();
+        $producto->descripcion=$request->descripcion;
+        $producto->precio=$request->precio;
+        $producto->save();
 
-            $user = User::create([
-                'name' => $request->input('nombre'),
-                'email' => $request->input('email'),
-                'password' => $request->input('passUno'),
-            ]);
-            auth()->login($user);
-            return redirect()->route('login.create');
-        }catch(Exception $e){
-            return back()->withErrors([
-                'message' => 'Usuario o contraseña incorrecto'
-            ]);
-        }
+        return redirect()->route('productos.index');
     }
 
     /**
@@ -76,7 +63,8 @@ class RegisterController extends Controller
      */
     public function edit($id)
     {
-        //
+        $producto = Producto::find($id);
+        return view ('productos.edit', compact('producto'));
     }
 
     /**
@@ -88,7 +76,12 @@ class RegisterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $producto = Producto::find($id);
+        $producto->descripcion=$request->descripcion;
+        $producto->precio=$request->precio;
+        $producto->update();
+
+        return redirect()->route('productos.index');
     }
 
     /**
@@ -99,6 +92,8 @@ class RegisterController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $producto = Producto::find($id);
+        $producto->delete();
+        return redirect()->route("productos.index");
     }
 }

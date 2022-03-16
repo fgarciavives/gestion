@@ -3,9 +3,9 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Factura;
-use App\Models\Producto;
-class LineaFactory extends Factory
+use App\Models\Familia;
+
+class ProductoFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -15,16 +15,13 @@ class LineaFactory extends Factory
     public function definition()
     {
         return [
+            'nombre' => $this->faker->word(),
             'descripcion'=>$this->faker->sentence(),
-            'cantidad'=>$this->faker->numberBetween(1,10),
             'precio'=>$this->faker->numberBetween(1,10000),
-            'factura_numero'=>function(){
-                return Factura::factory()->create()->numero;
+            'familia_id'=>function(){
+                //n
+                return $this->faker->numberBetween(1,20);
             },
-            'producto_id'=>function(){
-                return Producto::factory()->create()->id;
-            },
-            
         ];
     }
 }

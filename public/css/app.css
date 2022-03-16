@@ -24,5 +24,58 @@ body {
 }
 
 .cajonCrearFactura {
-    
+    margin: 5%;
+    background-color: white;
+    border: 2px solid black;
+}
+.cajonCrearFactura input{
+    margin: 10px;
+}
+.cajonCrearFactura form{
+    margin-left: 20px;
+}
+
+
+.facturaDatos {
+    margin:5%;
+    border: 2px solid black;
+    background-color:white;
+}
+.facturaDatos input {
+    margin:20px;
+}
+.facturaDatos form {
+    margin-left:20px;
+}
+
+.facturaProducto {
+    margin-left:5%;
+    margin-right:5%;
+    border: 2px solid black;
+    background-color:white;
+}
+.facturaProducto input {
+    margin:20px;
+}
+.facturaProducto form {
+    margin-left:20px;
+}
+.facturaProducto select {
+    margin-top:20px;
+}
+
+.facturaTabla {
+    margin: 5%;
+    background-color:white;
+    border: 2px solid black;
+}
+
+.botonesPaginate {
+    display:flex;
+    justify-content:center;
+    border: 1px solid black;
+    background-color:peachpuff;
+}
+.botonesPaginate div{
+    margin-top: 20px;
 }

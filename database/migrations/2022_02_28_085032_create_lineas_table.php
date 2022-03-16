@@ -16,7 +16,7 @@ class CreateLineasTable extends Migration
         Schema::create('lineas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('producto');
+            $table->string('descripcion');
             $table->float('cantidad')->default(1);
             $table->float('precio')->default(0);
             $table->integer('factura_numero');
@@ -25,6 +25,7 @@ class CreateLineasTable extends Migration
                 ->on('facturas')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+         
         });
     }
 

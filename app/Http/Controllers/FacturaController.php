@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Factura;
+use App\Models\Cliente;
+use App\Models\Producto;
+use Exception;
 
 class FacturaController extends Controller
 {
@@ -14,8 +17,8 @@ class FacturaController extends Controller
      */
     public function index()
     {
-        $facturas=Factura::all();
-        return view('lista',compact('facturas'));
+        $facturas=Factura::paginate(10);
+        return view('facturas.lista',compact('facturas'));
     }
 
     /**
@@ -25,7 +28,8 @@ class FacturaController extends Controller
      */
     public function create()
     {
-        return view('facturas.create');
+        $clientes = Cliente::all();
+        return view('facturas.create',compact('clientes'));
     }
 
     /**
@@ -36,7 +40,25 @@ class FacturaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $factura = new Factura;
+            $factura->numero=$request->numero;
+            $factura->fecha=$request->fecha;
+            $factura->nombre=$request->nombre;
+            $factura->direccion=$request->direccion;
+            $factura->poblacion=$request->poblacion;
+            $factura->provincia=$request->provincia;
+            $factura->cpostal=$request->cpostal;
+            $factura->telefono=$request->telefono;
+            $factura->iva=$request->iva;
+            $factura->cliente_id=$request->cliente_id;
+            $factura->save();
+            return redirect()->route('facturas.edit',$request->numero);
+        }catch(Exception $exc){
+            return back()->withErrors([
+                'message' => 'Complete todos los campos'
+            ]);
+        }
     }
 
     /**
@@ -59,8 +81,9 @@ class FacturaController extends Controller
     public function edit($num)
     {
         $factura=Factura::find($num);
-       
-        return view('factura',['factura'=>$factura]);
+        $cliente = Cliente::select('*')->where('id','=', $factura->cliente_id)->get();
+        $productos=Producto::all();
+        return view('facturas.factura',['factura'=>$factura,'productos'=>$productos, 'cliente'=>$cliente]);
     }
 
     /**
@@ -72,7 +95,19 @@ class FacturaController extends Controller
      */
     public function update(Request $request, $num)
     {
-        //
+        $factura = Factura::find($num);
+        $factura->fecha=$request->fecha;
+        $factura->nombre=$request->nombre;
+        $factura->direccion=$request->direccion;
+        $factura->poblacion=$request->poblacion;
+        $factura->provincia=$request->provincia;
+        $factura->cpostal=$request->cpostal;
+        $factura->telefono=$request->telefono;
+        $factura->iva=$request->iva;
+        $factura->update();
+
+        $productos=Producto::all();
+        return view('facturas.factura',['factura'=>$factura,'productos'=>$productos]);
     }
 
     /**

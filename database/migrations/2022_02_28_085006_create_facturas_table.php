@@ -16,6 +16,7 @@ class CreateFacturasTable extends Migration
         Schema::create('facturas', function (Blueprint $table) {
             $table->integer('numero')->primary();
             $table->date('fecha');
+            $table->double('iva');
             $table->string('nombre');
             $table->string('direccion')->nullable();
             $table->string('cpostal')->nullable();
@@ -23,6 +24,7 @@ class CreateFacturasTable extends Migration
             $table->string('provincia')->nullable();
             $table->string('telefono')->nullable();
             $table->timestamps();
+            $table->integer('cliente_id');
         });
     }
 

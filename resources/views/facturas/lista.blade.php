@@ -6,12 +6,17 @@
 @section('content')
 
 <div class="tablaListarFacturas">
+    <div class="botonesPaginate">
+        <div>
+            {{$facturas->links("pagination::bootstrap-4")}}
+        </div>
+    </div>
     <table class="table table-hover">
         <thead class="table-dark">
             <tr>
                 <th>Número</th>
                 <th>Fecha</th>
-                <th>Cliente</th>
+                <th>Nombre</th>
                 <th>Total</th>
             </tr>
         </thead>

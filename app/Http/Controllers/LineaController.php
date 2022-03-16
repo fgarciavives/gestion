@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Factura;
+use App\Models\Producto;
+use App\Models\Linea;
+use App\Models\Cliente;
 
 class LineaController extends Controller
 {
@@ -34,7 +38,16 @@ class LineaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $linea = new Linea;
+        $linea->descripcion=$request->descripcion;
+        $linea->cantidad=$request->cantidad;
+        $linea->precio=$request->precio;
+        $linea->factura_numero=$request->factura_numero;
+        $linea->producto_id=$request->producto_id;
+        $linea->save();
+
+        $productos=Producto::all();
+        return view('facturas.factura',['factura'=>Factura::find($request->factura_numero),'productos'=>$productos]);
     }
 
     /**
@@ -54,9 +67,11 @@ class LineaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        //
+        $linea = Linea::find($id);
+        $productos=Producto::all();
+        return view('facturas.edit',['factura'=>Factura::find($request->factura_numero),'productos'=>$productos,'linea'=>$linea] );
     }
 
     /**
@@ -68,7 +83,14 @@ class LineaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $linea = Linea::find($id);
+        $linea->descripcion=$request->descripcion;
+        $linea->cantidad=$request->cantidad;
+        $linea->precio=$request->precio;
+        $linea->update();
+
+        $productos=Producto::all();
+        return view('facturas.factura',['factura'=>Factura::find($request->factura_numero),'productos'=>$productos]);
     }
 
     /**
@@ -77,8 +99,11 @@ class LineaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        //
+        $linea = Linea::find($id);
+        $linea->delete();
+        $productos=Producto::all();
+        return view('facturas.factura',['factura'=>Factura::find($request->factura_numero),'productos'=>$productos]);
     }
 }

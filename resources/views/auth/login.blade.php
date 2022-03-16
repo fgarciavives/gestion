@@ -21,7 +21,7 @@
           <input type="password" class="form-control" name="password" placeholder="Introduce la contraseña"/>
         </div>
 
-        <button class="btn btn-danger" type="submit" name="guardar">Guardar</button>
+        <button class="btn btn-danger" type="submit" name="entrar">Entrar</button>
         <a href="{{route('register.create')}}" type="button" class="btn btn-warning">Registrar</a>
     </form>
 </div>
